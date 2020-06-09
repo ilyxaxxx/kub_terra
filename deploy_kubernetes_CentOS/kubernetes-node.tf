@@ -68,6 +68,7 @@ provisioner "file" {
         connection {
             type     = "ssh"
             user     = "root"
+            host     = "${var.vsphere_vm_name_k8n1}${count.index + 1}"
             password = "${var.vsphere_vm_password}"
         }
     }
@@ -80,6 +81,7 @@ provisioner "file" {
         connection {
             type     = "ssh"
             user     = "root"
+            host     = "${var.host}"
             password = "${var.vsphere_vm_password}"
         }
     }
@@ -90,6 +92,7 @@ provisioner "file" {
       
         connection {
             type     = "ssh"
+            host     = "${var.host}"
             user     = "root"
             password = "${var.vsphere_vm_password}"
         }
@@ -101,6 +104,7 @@ provisioner "file" {
         connection {
             type     = "ssh"
             user     = "root"
+            host     = "${var.host}"
             password = "${var.vsphere_vm_password}"
         }
     }
@@ -112,6 +116,7 @@ provisioner "file" {
         connection {
             type     = "ssh"
             user     = "root"
+            host     = "${var.host}"
             password = "${var.vsphere_vm_password}"
         }
     }

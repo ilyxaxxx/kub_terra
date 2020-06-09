@@ -3,7 +3,7 @@
 #===============================================================================
 
 # Create a vSphere VM in the folder #
-resource "vsphere_virtual_machine" "TPM03-K8-NODE" {
+resource "vsphere_virtual_machine" "KUBE-NODE" {
 
   # Node Count #
 
@@ -14,9 +14,7 @@ resource "vsphere_virtual_machine" "TPM03-K8-NODE" {
   resource_pool_id = "${data.vsphere_resource_pool.resource_pool.id}"
   datastore_id     = "${data.vsphere_datastore.datastore.id}"
   folder           = "${var.vsphere_vm_folder}"
-  tags             = ["${data.vsphere_tag.tag.id}"]
-
-  #depends_on = ["vsphere_virtual_machine.TPM03-K8-MASTER"]
+#  tags             = ["${data.vsphere_tag.tag.id}"]
 
   # VM resources #
   num_cpus = "${var.vsphere_vcpu_number}"
@@ -68,7 +66,8 @@ provisioner "file" {
         connection {
             type     = "ssh"
             user     = "root"
-            password = "${var.vsphere_vm_password}"
+            private_key  = file(var.vsphere_vm_password)
+            host     = var.ipv4_address
         }
     }
 
@@ -80,9 +79,11 @@ provisioner "file" {
         connection {
             type     = "ssh"
             user     = "root"
+            host     = "${var.host}"
             password = "${var.vsphere_vm_password}"
         }
     }
+    
     provisioner "remote-exec" {
         inline = [
             "yum install -y kubelet-${var.vsphere_k8_version} kubeadm-${var.vsphere_k8_version} kubectl-${var.vsphere_k8_version} --disableexcludes=kubernetes"
@@ -90,6 +91,7 @@ provisioner "file" {
       
         connection {
             type     = "ssh"
+            host     = "${var.host}"
             user     = "root"
             password = "${var.vsphere_vm_password}"
         }
@@ -101,6 +103,7 @@ provisioner "file" {
         connection {
             type     = "ssh"
             user     = "root"
+            host     = "${var.host}"
             password = "${var.vsphere_vm_password}"
         }
     }
@@ -112,6 +115,7 @@ provisioner "file" {
         connection {
             type     = "ssh"
             user     = "root"
+            host     = "${var.host}"
             password = "${var.vsphere_vm_password}"
         }
     }

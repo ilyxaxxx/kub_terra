@@ -1,7 +1,7 @@
 # vCenter connection
 vsphere_vcenter = "vcenter.gw17.iwcs.net"
-vsphere_user = "krylov_i"
-vsphere_password = "TbKjO4Izh"
+vsphere_user = ""
+vsphere_password = ""
 vsphere_unverified_ssl = "true"
 
 # VM specifications
